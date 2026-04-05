@@ -310,7 +310,13 @@ impl GovernanceContract {
 
         env.events().publish(
             (Symbol::new(&env, "ProposalApproved"),),
-            (pending.id, signer.clone(), approvals_so_far, threshold),
+            TransferApprovedEvent {
+                proposal_id: pending.id,
+                signer,
+                approvals_so_far,
+                threshold,
+                timestamp: env.ledger().timestamp(),
+            },
         );
     }
 
